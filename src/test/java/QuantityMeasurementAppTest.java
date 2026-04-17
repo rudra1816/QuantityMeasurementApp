@@ -3,40 +3,43 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class QuantityMeasurementAppTest {
 
+    // ✅ Feet tests
     @Test
     void givenSameFeetValues_whenCompared_thenShouldReturnTrue() {
-        QuantityMeasurementApp.Feet feet1 = new QuantityMeasurementApp.Feet(1.0);
-        QuantityMeasurementApp.Feet feet2 = new QuantityMeasurementApp.Feet(1.0);
-
-        assertEquals(feet1, feet2);
+        assertTrue(QuantityMeasurementApp.compareFeet(1.0, 1.0));
     }
 
     @Test
     void givenDifferentFeetValues_whenCompared_thenShouldReturnFalse() {
-        QuantityMeasurementApp.Feet feet1 = new QuantityMeasurementApp.Feet(1.0);
-        QuantityMeasurementApp.Feet feet2 = new QuantityMeasurementApp.Feet(2.0);
+        assertFalse(QuantityMeasurementApp.compareFeet(1.0, 2.0));
+    }
 
-        assertNotEquals(feet1, feet2);
+    // ✅ Inches tests (NEW)
+    @Test
+    void givenSameInchesValues_whenCompared_thenShouldReturnTrue() {
+        assertTrue(QuantityMeasurementApp.compareInches(1.0, 1.0));
     }
 
     @Test
-    void givenFeetValue_whenComparedWithNull_thenShouldReturnFalse() {
-        QuantityMeasurementApp.Feet feet = new QuantityMeasurementApp.Feet(1.0);
-
-        assertNotEquals(null, feet);
+    void givenDifferentInchesValues_whenCompared_thenShouldReturnFalse() {
+        assertFalse(QuantityMeasurementApp.compareInches(1.0, 2.0));
     }
 
     @Test
-    void givenFeetValue_whenComparedWithOtherType_thenShouldReturnFalse() {
-        QuantityMeasurementApp.Feet feet = new QuantityMeasurementApp.Feet(1.0);
-
-        assertNotEquals("1.0", feet);
+    void givenInchesValue_whenComparedWithNull_thenShouldReturnFalse() {
+        QuantityMeasurementApp.Inches inches = new QuantityMeasurementApp.Inches(1.0);
+        assertFalse(inches.equals(null));
     }
 
     @Test
-    void givenSameReference_whenCompared_thenShouldReturnTrue() {
-        QuantityMeasurementApp.Feet feet = new QuantityMeasurementApp.Feet(1.0);
+    void givenInchesValue_whenComparedWithOtherType_thenShouldReturnFalse() {
+        QuantityMeasurementApp.Inches inches = new QuantityMeasurementApp.Inches(1.0);
+        assertFalse(inches.equals("1.0"));
+    }
 
-        assertEquals(feet, feet);
+    @Test
+    void givenSameReferenceInches_whenCompared_thenShouldReturnTrue() {
+        QuantityMeasurementApp.Inches inches = new QuantityMeasurementApp.Inches(1.0);
+        assertTrue(inches.equals(inches));
     }
 }
