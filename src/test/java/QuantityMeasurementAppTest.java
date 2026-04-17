@@ -3,43 +3,84 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class QuantityMeasurementAppTest {
 
-    // ✅ Feet tests
+    // ✅ UC1: Feet to Feet
     @Test
-    void givenSameFeetValues_whenCompared_thenShouldReturnTrue() {
-        assertTrue(QuantityMeasurementApp.compareFeet(1.0, 1.0));
+    void givenFeetToFeetSameValue_shouldReturnTrue() {
+        var q1 = new QuantityMeasurementApp.QuantityLength(1.0, QuantityMeasurementApp.LengthUnit.FEET);
+        var q2 = new QuantityMeasurementApp.QuantityLength(1.0, QuantityMeasurementApp.LengthUnit.FEET);
+
+        assertEquals(q1, q2);
     }
 
     @Test
-    void givenDifferentFeetValues_whenCompared_thenShouldReturnFalse() {
-        assertFalse(QuantityMeasurementApp.compareFeet(1.0, 2.0));
+    void givenFeetToFeetDifferentValue_shouldReturnFalse() {
+        var q1 = new QuantityMeasurementApp.QuantityLength(1.0, QuantityMeasurementApp.LengthUnit.FEET);
+        var q2 = new QuantityMeasurementApp.QuantityLength(2.0, QuantityMeasurementApp.LengthUnit.FEET);
+
+        assertNotEquals(q1, q2);
     }
 
-    // ✅ Inches tests (NEW)
+    // ✅ UC2: Inch to Inch
     @Test
-    void givenSameInchesValues_whenCompared_thenShouldReturnTrue() {
-        assertTrue(QuantityMeasurementApp.compareInches(1.0, 1.0));
-    }
+    void givenInchToInchSameValue_shouldReturnTrue() {
+        var q1 = new QuantityMeasurementApp.QuantityLength(1.0, QuantityMeasurementApp.LengthUnit.INCH);
+        var q2 = new QuantityMeasurementApp.QuantityLength(1.0, QuantityMeasurementApp.LengthUnit.INCH);
 
-    @Test
-    void givenDifferentInchesValues_whenCompared_thenShouldReturnFalse() {
-        assertFalse(QuantityMeasurementApp.compareInches(1.0, 2.0));
-    }
-
-    @Test
-    void givenInchesValue_whenComparedWithNull_thenShouldReturnFalse() {
-        QuantityMeasurementApp.Inches inches = new QuantityMeasurementApp.Inches(1.0);
-        assertFalse(inches.equals(null));
+        assertEquals(q1, q2);
     }
 
     @Test
-    void givenInchesValue_whenComparedWithOtherType_thenShouldReturnFalse() {
-        QuantityMeasurementApp.Inches inches = new QuantityMeasurementApp.Inches(1.0);
-        assertFalse(inches.equals("1.0"));
+    void givenInchToInchDifferentValue_shouldReturnFalse() {
+        var q1 = new QuantityMeasurementApp.QuantityLength(1.0, QuantityMeasurementApp.LengthUnit.INCH);
+        var q2 = new QuantityMeasurementApp.QuantityLength(2.0, QuantityMeasurementApp.LengthUnit.INCH);
+
+        assertNotEquals(q1, q2);
+    }
+
+    // ✅ UC3: Cross-unit equality
+    @Test
+    void givenFeetAndInchEquivalent_shouldReturnTrue() {
+        var q1 = new QuantityMeasurementApp.QuantityLength(1.0, QuantityMeasurementApp.LengthUnit.FEET);
+        var q2 = new QuantityMeasurementApp.QuantityLength(12.0, QuantityMeasurementApp.LengthUnit.INCH);
+
+        assertEquals(q1, q2);
     }
 
     @Test
-    void givenSameReferenceInches_whenCompared_thenShouldReturnTrue() {
-        QuantityMeasurementApp.Inches inches = new QuantityMeasurementApp.Inches(1.0);
-        assertTrue(inches.equals(inches));
+    void givenInchAndFeetEquivalent_shouldReturnTrue() {
+        var q1 = new QuantityMeasurementApp.QuantityLength(12.0, QuantityMeasurementApp.LengthUnit.INCH);
+        var q2 = new QuantityMeasurementApp.QuantityLength(1.0, QuantityMeasurementApp.LengthUnit.FEET);
+
+        assertEquals(q1, q2);
+    }
+
+    // ✅ Common tests (UC1, UC2, UC3)
+    @Test
+    void givenSameReference_shouldReturnTrue() {
+        var q = new QuantityMeasurementApp.QuantityLength(1.0, QuantityMeasurementApp.LengthUnit.FEET);
+
+        assertEquals(q, q);
+    }
+
+    @Test
+    void givenNullComparison_shouldReturnFalse() {
+        var q = new QuantityMeasurementApp.QuantityLength(1.0, QuantityMeasurementApp.LengthUnit.FEET);
+
+        assertNotEquals(null, q);
+    }
+
+    @Test
+    void givenDifferentUnitsAndDifferentValues_shouldReturnFalse() {
+        var q1 = new QuantityMeasurementApp.QuantityLength(1.0, QuantityMeasurementApp.LengthUnit.FEET);
+        var q2 = new QuantityMeasurementApp.QuantityLength(10.0, QuantityMeasurementApp.LengthUnit.INCH);
+
+        assertNotEquals(q1, q2);
+    }
+
+    @Test
+    void givenNullUnit_shouldThrowException() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            new QuantityMeasurementApp.QuantityLength(1.0, null);
+        });
     }
 }

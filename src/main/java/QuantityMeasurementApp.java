@@ -1,32 +1,37 @@
 public class QuantityMeasurementApp {
 
-    // ✅ Feet class (already done in UC1)
-    public static class Feet {
-        private final double value;
+    // ✅ ENUM for units (UC3)
+    public enum LengthUnit {
+        FEET(1.0),
+        INCH(1.0 / 12.0);
 
-        public Feet(double value) {
-            this.value = value;
+        private final double conversionFactor;
+
+        LengthUnit(double conversionFactor) {
+            this.conversionFactor = conversionFactor;
         }
 
-        @Override
-        public boolean equals(Object obj) {
-            if (this == obj) return true;
-
-            if (obj == null || getClass() != obj.getClass())
-                return false;
-
-            Feet other = (Feet) obj;
-
-            return Double.compare(this.value, other.value) == 0;
+        public double toFeet(double value) {
+            return value * conversionFactor;
         }
     }
 
-    // ✅ NEW Inches class (UC2)
-    public static class Inches {
-        private final double value;
+    // ✅ Generic Quantity Class (UC3)
+    public static class QuantityLength {
 
-        public Inches(double value) {
+        private final double value;
+        private final LengthUnit unit;
+
+        public QuantityLength(double value, LengthUnit unit) {
+            if (unit == null) {
+                throw new IllegalArgumentException("Unit cannot be null");
+            }
             this.value = value;
+            this.unit = unit;
+        }
+
+        private double toFeet() {
+            return unit.toFeet(value);
         }
 
         @Override
@@ -36,9 +41,9 @@ public class QuantityMeasurementApp {
             if (obj == null || getClass() != obj.getClass())
                 return false;
 
-            Inches other = (Inches) obj;
+            QuantityLength other = (QuantityLength) obj;
 
-            return Double.compare(this.value, other.value) == 0;
+            return Double.compare(this.toFeet(), other.toFeet()) == 0;
         }
     }
 }
