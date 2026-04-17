@@ -1,22 +1,24 @@
 public class QuantityMeasurementApp {
 
-    // ✅ ENUM for units (UC3)
+    // ✅ ENUM with all units (UC1 → UC4)
     public enum LengthUnit {
         FEET(1.0),
-        INCH(1.0 / 12.0);
+        INCH(1.0 / 12.0),
+        YARD(3.0),
+        CENTIMETER(0.393701 / 12.0); // convert cm → inch → feet
 
-        private final double conversionFactor;
+        private final double toFeetFactor;
 
-        LengthUnit(double conversionFactor) {
-            this.conversionFactor = conversionFactor;
+        LengthUnit(double toFeetFactor) {
+            this.toFeetFactor = toFeetFactor;
         }
 
         public double toFeet(double value) {
-            return value * conversionFactor;
+            return value * toFeetFactor;
         }
     }
 
-    // ✅ Generic Quantity Class (UC3)
+    // ✅ Generic Quantity Class (UC3 + UC4)
     public static class QuantityLength {
 
         private final double value;
